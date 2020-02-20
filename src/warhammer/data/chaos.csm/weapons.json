@@ -1,0 +1,32 @@
+[
+  {
+    "effects": [],
+    "armour_penetration": 0,
+    "damage": 1,
+    "name": "Boltgun",
+    "range": 24,
+    "strength": 4,
+    "type": "MELEE",
+    "attacks": 1
+  },
+  {
+    "effects": [],
+    "armour_penetration": 1,
+    "damage": 1,
+    "name": "Chainsword",
+    "range": 24,
+    "strength": 1,
+    "type": "MELEE",
+    "attacks": 1
+  },
+  {
+    "effects": [],
+    "armour_penetration": 1,
+    "damage": 1,
+    "name": "Lascannon",
+    "range": 24,
+    "strength": 1,
+    "type": "MELEE",
+    "attacks": 1
+  }
+]

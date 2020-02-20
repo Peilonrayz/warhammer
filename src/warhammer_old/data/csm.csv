@@ -1,0 +1,10 @@
+Autocannon,48,Heavy,2,7,-1,2,
+Autogun,24,Rapid Fire,1,3,0,1,
+Autopistol,12,Pistol,1,3,0,1,
+Baleflamer,18,Assault,D6,6,-2,2,This weapon automatically hits its target.
+Battle Cannon,72,Heavy,D6,8,-2,D3,
+Battlemaster – Single Frequency,48,Heavy,D3,8,-2,D3,Units attacked by this weapon do not gain any bonus to their saving throws for being in cover.
+Blastmaster – Varied frequency,36,Assault,D6,4,-1,1,Units attacked by this weapon do not gain any bonus to their saving throws for being in cover.
+Blight Grenade,6,Grenade ,D6,3,0,1,You can re-roll wound rolls of 1 for this weapon.
+Blight launcher,24,Assault,2,6,-2,D3,You can re-roll wound rolls of 1 for this weapon.
+Bolt Pistol,12,Pistol,1,,,,

@@ -1,0 +1,6 @@
+[
+  {"name": "ChaosLord", "save": 3, "weapons": [], "effects": [], "attacks": 4, "movement": 6, "feel_no_pain": 7, "ballistic_skill": 2, "strength": 4, "toughness": 4, "leadership": 9, "weapon_skill": 2, "power": 5, "invulnerable": 4, "wounds": 5},
+  {"name": "HavocChampion", "save": 3, "weapons": [], "effects": [], "attacks": 2, "movement": 6, "feel_no_pain": 7, "ballistic_skill": 3, "strength": 4, "toughness": 4, "leadership": 7, "weapon_skill": 3, "power": 1, "invulnerable": 7, "wounds": 1},
+  {"name": "Havoc", "save": 3, "weapons": [], "effects": [], "attacks": 1, "movement": 6, "feel_no_pain": 7, "ballistic_skill": 3, "strength": 4, "toughness": 4, "leadership": 8, "weapon_skill": 3, "power": 1, "invulnerable": 7, "wounds": 1},
+  {"name": "ChaosSpaceMarine", "save": 3, "weapons": [], "effects": [], "attacks": 1, "movement": 6, "feel_no_pain": 7, "ballistic_skill": 3, "strength": 4, "toughness": 4, "leadership": 7, "weapon_skill": 3, "power": 5, "invulnerable": 7, "wounds": 1}
+]
