@@ -3,7 +3,7 @@ from pprint import pprint
 
 from warhammer import ExtUpgrade
 
-data = '''[
+data = """[
   {
     "name": "Bike",
     "requirements": {
@@ -88,9 +88,9 @@ data = '''[
     "abilities": ["DS(Teleport Strike)"],
     "keywords": ["+TERMINATOR"]
   }
-]'''
+]"""
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     upgrades = [asdict(u.build()) for u in ExtUpgrade.schema().loads(data, many=True)]
     pprint(upgrades)

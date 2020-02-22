@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import numbers
 import operator
-from typing import Generic, Iterator, Tuple, TypeVar, Union, Dict, Callable
+from typing import Callable, Dict, Generic, Iterator, Tuple, TypeVar, Union
 
-T = TypeVar('T')
+T = TypeVar("T")
 Number = numbers.Real
 
 
@@ -55,20 +55,18 @@ class ItemAmount(Generic[T]):
 
 
 def _item_amount_operator(
-    self: ItemAmount[T],
-    other: ItemAmount[T],
-    op: Callable[[Number, Number], Number],
+    self: ItemAmount[T], other: ItemAmount[T], op: Callable[[Number, Number], Number],
 ) -> ItemAmount[T]:
     if isinstance(other, ItemAmount):
         items = other._items
     elif isinstance(other, numbers.Real):
         if other % 1:
-            raise ValueError('Numbers can only be real.')
+            raise ValueError("Numbers can only be real.")
         items = dict.fromkeys(self._items, other)
     else:
         raise TypeError(
-            f'Must perform operations with ItemAmount or real numbers, '
-            f'not {type(other)}.'
+            f"Must perform operations with ItemAmount or real numbers, "
+            f"not {type(other)}."
         )
 
     item = self.copy()

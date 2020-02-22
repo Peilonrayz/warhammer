@@ -1,14 +1,9 @@
 from __future__ import annotations
-from dataclasses_json import dataclass_json, DataClassJsonMixin
 
-from typing import Optional, get_type_hints
 from dataclasses import dataclass, fields
-from dataclasses_json import dataclass_json
+from typing import List, Optional, get_type_hints
 
-
-from dataclasses import dataclass
-from dataclasses_json import dataclass_json
-from typing import List, Optional
+from dataclasses_json import DataClassJsonMixin, dataclass_json
 
 
 @dataclass_json
@@ -21,7 +16,7 @@ class Repository:
 @dataclass_json
 @dataclass
 class Breaks:
-    errors_with_trace = ''
+    errors_with_trace = ""
     nodes: List[Optional[Repository]]
 
 
@@ -35,24 +30,24 @@ def show_obj(obj):
     if obj is None:
         return None
 
-    if hasattr(obj, 'nested'):
+    if hasattr(obj, "nested"):
         child = obj.nested
-    elif hasattr(obj, 'key_container') or hasattr(obj, 'value_container'):
+    elif hasattr(obj, "key_container") or hasattr(obj, "value_container"):
         child = [
             show_obj(o)
             for o in (
-                getattr(obj, 'key_container', None),
-                getattr(obj, 'value_container', None)
+                getattr(obj, "key_container", None),
+                getattr(obj, "value_container", None),
             )
         ]
     else:
-        child = show_obj(getattr(obj, 'container', None))
+        child = show_obj(getattr(obj, "container", None))
 
     ret = (
         type(obj).__name__,
         # obj.allow_none,
         # obj.default,
-        child
+        child,
     )
     if child is None:
         ret = ret[:-1]
@@ -64,7 +59,7 @@ def rec(fields):
         yield n, show_obj(f)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     from pprint import pprint
 
     try:
@@ -85,4 +80,3 @@ if __name__ == '__main__':
         print(A.from_json('{"a": 4, "b": null}'))
         print(A.schema().loads('{"a": 4, "b": 5}'))
         print(A.schema().loads('{"a": 4, "b": null}'))
-

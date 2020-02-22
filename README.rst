@@ -1,4 +1,4 @@
-warhammer
+Warhammer
 =========
 
 .. image:: https://travis-ci.com/Peilonrayz/warhammer.svg?branch=master
@@ -37,4 +37,4 @@ To run all tests run ``nox``. No venv is needed; nox makes all of them for us.
 License
 -------
 
-warhammer is available under the MIT license.
+Warhammer is available under the MIT license.

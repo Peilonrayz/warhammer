@@ -1,8 +1,8 @@
 from __future__ import annotations
 
 import dataclasses
+from typing import Any, Dict, Tuple
 
-from typing import Tuple, Dict, Any
 from typing_extensions import Protocol
 
 
@@ -83,14 +83,16 @@ class ModelBuilder:
     fields: Tuple[ModelField, ...]
 
     def load_valid(self, value):
-        return value['_model'] == self.model.__name__
+        return value["_model"] == self.model.__name__
 
     def load(self, value):
-        value.pop('_model', None)
-        return self.model(**{
-            field.internal_name: field.converter.load(value[field.external_name])
-            for field in self.fields
-        })
+        value.pop("_model", None)
+        return self.model(
+            **{
+                field.internal_name: field.converter.load(value[field.external_name])
+                for field in self.fields
+            }
+        )
 
     def dump(self, value):
         pass

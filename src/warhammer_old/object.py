@@ -1,12 +1,5 @@
 from .object_loader import model
-from .objects.values import Constant, Dice, Relative, Combination
 from .objects.objects import Model
+from .objects.values import Combination, Constant, Dice, Relative
 
-
-builder = model.Models([
-    Constant,
-    Dice,
-    Relative,
-    Combination,
-    Model,
-])
+builder = model.Models([Constant, Dice, Relative, Combination, Model,])

@@ -1,9 +1,8 @@
 from __future__ import annotations
 
 import dataclasses
-import itertools
 import enum
-
+import itertools
 from typing import Union
 
 
@@ -12,7 +11,7 @@ class Constant:
     value: int
 
     def __str__(self):
-        return f'{self.value}'
+        return f"{self.value}"
 
     def values(self, parent):
         return [self.value]
@@ -23,7 +22,7 @@ class Relative:
     stat: str
 
     def __str__(self):
-        return ''
+        return ""
 
     def values(self, parent):
         return getattr(parent, self.stat).values(parent)
@@ -41,8 +40,7 @@ class Dice:
         return [
             sum(values)
             for values in itertools.product(
-                range(1, self.range + 1),
-                repeat=self.amount
+                range(1, self.range + 1), repeat=self.amount
             )
         ]
 
@@ -51,8 +49,8 @@ BasicValue = Union[Constant, Relative, Dice]
 
 
 class Operators(enum.Enum):
-    ADD = '+'
-    SUB = '-'
+    ADD = "+"
+    SUB = "-"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -62,7 +60,7 @@ class Combination:
     operator: Operators
 
     def __str__(self):
-        return f'{self.lhs}{self.operator.value}{self.rhs}'
+        return f"{self.lhs}{self.operator.value}{self.rhs}"
 
     def values(self, parent):
         return [

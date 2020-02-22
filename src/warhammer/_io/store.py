@@ -2,16 +2,16 @@ from __future__ import annotations
 
 import json
 import pathlib
-from typing import Any, Iterator, TypeVar, Generic, Type, Dict
+from typing import Any, Dict, Generic, Iterator, Type, TypeVar
 
 import marshmallow
-import typing_json
+import mm_json as typing_json
 
-from .effects_store import EffectsStore
 from .. import models
+from .effects_store import EffectsStore
 
 _PATH = pathlib.Path(__file__).parent.parent
-T = TypeVar('T')
+T = TypeVar("T")
 
 
 class Store(Generic[T]):
@@ -20,13 +20,9 @@ class Store(Generic[T]):
     _data: Dict[str, T]
 
     def __init__(
-        self,
-        name: str,
-        type_: str,
-        model: Type[T],
-        converter: typing_json.Converter
+        self, name: str, type_: str, model: Type[T], converter: typing_json.Converter
     ) -> None:
-        self.path = _PATH / 'data' / name / f'{type_}.json'
+        self.path = _PATH / "data" / name / f"{type_}.json"
         self.Model = typing_json.dataclass_json(model, converter=converter)
         self._data = {}
 
@@ -50,7 +46,7 @@ class Store(Generic[T]):
     def save(self) -> None:
         raw_json = list(self._data.values())
         items = self.Model.schema.dump(list(raw_json), many=True)
-        with self.path.open('w') as f:
+        with self.path.open("w") as f:
             json.dump(items, f)
 
 
@@ -112,18 +108,14 @@ def stores(store_name: str) -> StoreCollection:
     class WeaponAmountField(marshmallow.fields.Field):
         def _serialize(self, value, attr, obj, **kwargs):
             return [
-                {
-                    'model': model.name,
-                    'amount': amount,
-                }
+                {"model": model.name, "amount": amount,}
                 for model, amount in value.iter_amount()
             ]
 
         def _deserialize(self, value, attr, data, **kwargs):
-            return models.WeaponAmount({
-                weapons_store[item['model']]: item['amount']
-                for item in value
-            })
+            return models.WeaponAmount(
+                {weapons_store[item["model"]]: item["amount"] for item in value}
+            )
 
         @classmethod
         def from_typing(
@@ -134,31 +126,12 @@ def stores(store_name: str) -> StoreCollection:
         ):
             return cls(**kwargs)
 
-    _converter = typing_json.Converter({
-        models.Effect: EffectField,
-        models.WeaponAmount: WeaponAmountField,
-    })
+    _converter = typing_json.Converter(
+        {models.Effect: EffectField, models.WeaponAmount: WeaponAmountField,}
+    )
     effects_store = EffectStore.load(
-        store_name,
-        'effects',
-        models.EffectJSON,
-        _converter,
+        store_name, "effects", models.EffectJSON, _converter,
     )
-    models_store = Store.load(
-        store_name,
-        'units',
-        models.Model,
-        _converter,
-    )
-    weapons_store = Store.load(
-        store_name,
-        'weapons',
-        models.Weapon,
-        _converter,
-    )
-    return StoreCollection(
-        _converter,
-        effects_store,
-        models_store,
-        weapons_store,
-    )
+    models_store = Store.load(store_name, "units", models.Model, _converter,)
+    weapons_store = Store.load(store_name, "weapons", models.Weapon, _converter,)
+    return StoreCollection(_converter, effects_store, models_store, weapons_store,)

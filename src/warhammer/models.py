@@ -1,8 +1,8 @@
-from __future__ import annotations, annotations
+from __future__ import annotations
 
 import dataclasses
 import enum
-from typing import Any, Dict, Tuple, Optional
+from typing import Any, Dict, Optional, Tuple
 
 from . import item_amount
 from ._io.effects_store import EffectsStore
@@ -11,8 +11,8 @@ store = EffectsStore()
 
 
 class EffectType(enum.Enum):
-    OFFENCIVE = 'Offencive'
-    DEFENSIVE = 'Defensive'
+    OFFENCIVE = "Offencive"
+    DEFENSIVE = "Defensive"
 
 
 @store.register
@@ -36,7 +36,7 @@ class EffectJSON:
 
 
 class WeaponType(enum.Enum):
-    MELEE = 'Melee'
+    MELEE = "Melee"
 
 
 @dataclasses.dataclass(frozen=True)
@@ -53,9 +53,8 @@ class Weapon:
 
 class WeaponAmount(item_amount.ItemAmount[Weapon]):
     def __repr__(self):
-        return ' + '.join(
-            f'{amount}*{weapon.name}'
-            for weapon, amount in self._items.items()
+        return " + ".join(
+            f"{amount}*{weapon.name}" for weapon, amount in self._items.items()
         )
 
 
@@ -100,16 +99,13 @@ class Attack:
 
     @classmethod
     def from_models(
-        cls,
-        model: Model,
-        weapon: Weapon,
-        target: Model,
+        cls, model: Model, weapon: Weapon, target: Model,
     ):
         return cls(
             (
                 model.weapon_skill
-                if weapon.type is WeaponType.MELEE else
-                model.ballistic_skill
+                if weapon.type is WeaponType.MELEE
+                else model.ballistic_skill
             ),
             weapon.attacks,
             weapon.armour_penetration,

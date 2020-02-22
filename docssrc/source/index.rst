@@ -1,4 +1,4 @@
-Welcome to warhammer's documentation!
+Welcome to Warhammer's documentation!
 =======================================
 
 .. toctree::

@@ -24,24 +24,20 @@ class Attack:
         self.effects = effects
 
     def wound_skill(self, attack: models.Attack):
-        if attack.strength >= 2*attack.toughness:
+        if attack.strength >= 2 * attack.toughness:
             return 2
         if attack.strength > attack.toughness:
             return 3
         if attack.strength == attack.toughness:
             return 4
-        if 2*attack.strength <= attack.toughness:
+        if 2 * attack.strength <= attack.toughness:
             return 6
         return 5
 
     def attack(self, attack: models.Attack):
         print(attack)
         print(self.effects)
-        _save = min([
-            attack.save - attack.armour_penetration,
-            attack.invulnerable,
-            7,
-        ])
+        _save = min([attack.save - attack.armour_penetration, attack.invulnerable, 7,])
 
         damages = [
             Damage({1: fractions.Fraction(7 - attack.attack_skill, 6)}),
@@ -49,7 +45,7 @@ class Attack:
             Damage({1: fractions.Fraction(_save - 1, 6)}),
             fnp_damage(
                 Damage({attack.damage: fractions.Fraction(1, 1)}),
-                Damage({1: fractions.Fraction(7-attack.feel_no_pain, 6)})
+                Damage({1: fractions.Fraction(7 - attack.feel_no_pain, 6)}),
             ),
         ]
 

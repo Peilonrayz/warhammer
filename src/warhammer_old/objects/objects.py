@@ -22,18 +22,18 @@ class Model:
 
     def __str__(self):
         return (
-            f'{self.name} '
+            f"{self.name} "
             f'{self.move}" '
-            f'{self.weapon_skill}+ '
-            f'{self.ballistic_skill}+ '
-            f'{self.strength} '
-            f'{self.toughness} '
-            f'{self.wounds} '
-            f'{self.attacks} '
-            f'{self.leadership} '
-            f'{self.save}+ '
-            f'{self.invulnerable_save}++ '
-            f'{self.feel_no_pain}+++ '
+            f"{self.weapon_skill}+ "
+            f"{self.ballistic_skill}+ "
+            f"{self.strength} "
+            f"{self.toughness} "
+            f"{self.wounds} "
+            f"{self.attacks} "
+            f"{self.leadership} "
+            f"{self.save}+ "
+            f"{self.invulnerable_save}++ "
+            f"{self.feel_no_pain}+++ "
         )
 
 
@@ -50,11 +50,10 @@ class Weapon:
 
     def __str__(self):
         return (
-            f'{self.name} '
+            f"{self.name} "
             f'{self.range}" '
-            f'{self.type} '
-            f'{self.strength} '
-            f'{self.armour_penetration} '
-            f'{self.damage} '
+            f"{self.type} "
+            f"{self.strength} "
+            f"{self.armour_penetration} "
+            f"{self.damage} "
         )
-

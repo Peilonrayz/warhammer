@@ -1,17 +1,18 @@
 from dataclasses import dataclass, fields
-from typing import List, Dict, Generic, TypeVar, Optional
 from enum import Enum
+from typing import Dict, Generic, List, Optional, TypeVar
 
-from .converters import Converter, Converters
 from dataclasses_json import dataclass_json
 
-T = TypeVar('T')
+from .converters import Converter, Converters
+
+T = TypeVar("T")
 
 
 class Op(Enum):
-    SET = ''
-    ADD = '+'
-    MINUS = '-'
+    SET = ""
+    ADD = "+"
+    MINUS = "-"
 
 
 @dataclass
@@ -23,8 +24,8 @@ class Value(Generic[T]):
     def from_str(cls, value: str):
         ops = {o.value: o for o in Op}
         op = ops.get(value[0], Op.SET)
-        fn = getattr(cls, '__args__', [str])[0]
-        return cls(op, fn(value[op is not Op.SET:]))
+        fn = getattr(cls, "__args__", [str])[0]
+        return cls(op, fn(value[op is not Op.SET :]))
 
     def to_str(self):
         return self.op.value + self.value
@@ -51,21 +52,18 @@ class Bonus:
     def from_str(cls, value: str):
         output = []
         for g in value.strip().split():
-            if g.startswith('.'):
-                output += [None] * g.count('.')
+            if g.startswith("."):
+                output += [None] * g.count(".")
             else:
                 output += [Value[int].from_str(g)]
         return cls(*output)
 
     def to_str(self) -> str:
-        output = ''
+        output = ""
         for field in fields(self):
             value = getattr(self, field.name)
-            value = ('.' if value is None else value.to_str())
-            output += (
-                '' if output[-1] == value and value == '.' else ' '
-                + value
-            )
+            value = "." if value is None else value.to_str()
+            output += "" if output[-1] == value and value == "." else " " + value
         return output
 
 
@@ -97,23 +95,25 @@ class Upgrade:
 @dataclass_json
 @dataclass(init=False)
 class ExtRequirements(Converter[Requirements]):
-    rank: int = Converters.property('rank')
-    upgrades: List[str] = Converters.property('upgrades')
+    rank: int = Converters.property("rank")
+    upgrades: List[str] = Converters.property("upgrades")
 
 
 @dataclass_json
 @dataclass(init=False)
 class ExtEquipment(Converter[Equipment]):
-    this: List[str] = Converters.property('this')
-    merge: Dict[str, List[str]] = Converters.property('merge')
+    this: List[str] = Converters.property("this")
+    merge: Dict[str, List[str]] = Converters.property("merge")
 
 
 @dataclass_json
 @dataclass(init=False)
 class ExtUpgrade(Converter[Upgrade]):
-    name: str = Converters.property('name')
-    requirements: ExtRequirements = Converters.property('requirements')
-    bonus: str = Converters.property('bonus', get_fn=Bonus.to_str, set_fn=Bonus.from_str)
-    equipment: ExtEquipment = Converters.property('equipment')
-    abilities: List[str] = Converters.property('abilities')
-    keywords: List[str] = Converters.property('keywords')
+    name: str = Converters.property("name")
+    requirements: ExtRequirements = Converters.property("requirements")
+    bonus: str = Converters.property(
+        "bonus", get_fn=Bonus.to_str, set_fn=Bonus.from_str
+    )
+    equipment: ExtEquipment = Converters.property("equipment")
+    abilities: List[str] = Converters.property("abilities")
+    keywords: List[str] = Converters.property("keywords")

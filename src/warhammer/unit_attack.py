@@ -5,7 +5,7 @@ import fractions
 import numbers
 from typing import Dict, List, Optional, Tuple, Union
 
-from . import item_amount, models, attacks
+from . import attacks, item_amount, models
 
 Number = numbers.Real
 Unit = item_amount.ItemAmount[models.ModelWrapper]
@@ -28,25 +28,23 @@ class UnitAttack:
             for weapon in model.weapons.iter_all():
                 weapons.setdefault(weapon, []).append(model)
 
-    def auras(self, *units: Unit, distance=float('inf')) -> UnitAttack:
-        self._auras.extend([
-            effect
-            for unit in units
-            for model in unit.iter_unique()
-            for effect in model.effects
-            if isinstance(effect, models.AuraEffect)
-            and effect.range < distance
-        ])
+    def auras(self, *units: Unit, distance=float("inf")) -> UnitAttack:
+        self._auras.extend(
+            [
+                effect
+                for unit in units
+                for model in unit.iter_unique()
+                for effect in model.effects
+                if isinstance(effect, models.AuraEffect) and effect.range < distance
+            ]
+        )
         return self
 
     def effects(self, *effects: models.Effect) -> UnitAttack:
         self._auras.extend(effects)
         return self
 
-    def weapons(
-        self,
-        weapons: Optional[models.WeaponAmount] = None
-    ) -> UnitAttack:
+    def weapons(self, weapons: Optional[models.WeaponAmount] = None) -> UnitAttack:
         if weapons is None:
             return self
         self._next_attack = next_attack = {}
@@ -55,7 +53,7 @@ class UnitAttack:
             if len(_weapons) < amount:
                 self._weapons = {}
                 self._next_attack = None
-                raise ValueError(f'Not enough {weapon}.')
+                raise ValueError(f"Not enough {weapon}.")
             next_attack[weapon] = _weapons[:amount]
             del _weapons[:amount]
         return self
@@ -75,9 +73,7 @@ class UnitAttack:
 
 
 def get_damages(
-    weapons: Dict[models.Weapon, List[models.ModelWrapper]],
-    distance: Number,
-    damages
+    weapons: Dict[models.Weapon, List[models.ModelWrapper]], distance: Number, damages
 ):
     for weapon, models_ in weapons.items():
         if weapon.range < distance:
@@ -90,7 +86,7 @@ def attack(
     weapons: Dict[models.Weapon, List[models.ModelWrapper]],
     targets: Unit,
     auras: List[models.Effect],
-    distance: Number
+    distance: Number,
 ):
     damages = {}
     for weapon, models_ in weapons.items():
@@ -99,7 +95,9 @@ def attack(
         for model in set(models_):
             for target in targets.iter_unique():
                 effects = extract_effects(model, weapon, target, auras, distance)
-                damage = attacks.Attack(effects).attack(models.Attack.from_models(model.model, weapon, target.model))
+                damage = attacks.Attack(effects).attack(
+                    models.Attack.from_models(model.model, weapon, target.model)
+                )
                 damages.setdefault((weapon, model), {})[target] = damage
 
     damages_ = get_damages(weapons, distance, damages)
@@ -114,7 +112,7 @@ def extract_effects(
     weapon: models.Weapon,
     target: models.ModelWrapper,
     auras: List[models.Effect],
-    distance: numbers.Real
+    distance: numbers.Real,
 ) -> Tuple[models.Effect, ...]:
     effects = [
         effect
@@ -126,10 +124,7 @@ def extract_effects(
         ]
         for effect in effects
         if effect.type == type_
-        and (
-            effect.attacker_range is None
-            or effect.attacker_range >= distance
-        )
+        and (effect.attacker_range is None or effect.attacker_range >= distance)
     ]
     return tuple(sorted(effects, key=lambda i: i.name))
 
@@ -139,6 +134,6 @@ class Sanitized:
         self._unit_attack = unit_attack
 
     def graph(self) -> None:
-        print('Graph!')
+        print("Graph!")
         for attack in self._unit_attack._attacks:
             print(attack)
